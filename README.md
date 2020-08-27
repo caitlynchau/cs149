@@ -1,2 +1,2 @@
-# cs149
-CS149 Operating Systems
+# CS149 Operating Systems
+Fall 2020
