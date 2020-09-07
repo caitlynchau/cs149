@@ -1,0 +1,31 @@
+    1  cc
+    2  make
+    3  apt install clion
+    4  sudo apt install clion
+    5  snap install clion
+    6  snap install clion --classic
+    7  vim
+    8  sudo apt install vim
+    9  man fork
+   10  man pthread
+   11  sudo apt get install manpages-posix-dev
+   12  sudo apt install manpages-posix-dev
+   13  man pthread
+   14  man pthreads
+   15  exit
+   16  pwd
+   17  cd ~
+   18  cd Desktop/
+   19  ls -latr ; mkdir ws1 ; cd ws1
+   20  wget -O out.pdf https://tinyurl.com/yy94jltt
+   21  ls -latr
+   22  history > worksheet1.log
+   23  cd Desktop/ws1/
+   24  gcc
+   25  pwd
+   26  cd ~
+   27  cd Desktop/
+   28  ls -latr ; mkdir ws_1 ; cd ws_1
+   29  wget -O out.pdf https://tinyurl.com/yy94jltt
+   30  ls -latr
+   31  history > worksheet1.log
