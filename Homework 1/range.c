@@ -1,3 +1,6 @@
+// Caitlyn Chau
+// CS 149 Sec 1
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -16,10 +19,8 @@ int main(int argc, char *argv[]) {
     else if (argc == 1) { // only one argument
         puts("No file specified");
         exit(0);
-    } else if (argc > 2) {
-        puts("Too many arguments\n");
-        exit(0);
-    } else { // exactly two arguments
+    } else { 
+        // more than 1 argument, if more than 2 arguments, rest are ignored
         file = fopen(argv[1], "r"); // argv[1] is path
         if (file == NULL){
             printf("range: cannot open file\n");
