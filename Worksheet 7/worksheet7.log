@@ -1,0 +1,300 @@
+    1  cc
+    2  make
+    3  apt install clion
+    4  sudo apt install clion
+    5  snap install clion
+    6  snap install clion --classic
+    7  vim
+    8  sudo apt install vim
+    9  man fork
+   10  man pthread
+   11  sudo apt get install manpages-posix-dev
+   12  sudo apt install manpages-posix-dev
+   13  man pthread
+   14  man pthreads
+   15  exit
+   16  pwd
+   17  cd ~
+   18  cd Desktop/
+   19  ls -latr ; mkdir ws1 ; cd ws1
+   20  wget -O out.pdf https://tinyurl.com/yy94jltt
+   21  ls -latr
+   22  history > worksheet1.log
+   23  cd Desktop/ws1/
+   24  gcc
+   25  cd ~
+   26  cd Desktop/
+   27  ls -latr ; mkdir ws_1 ; cd ws_1
+   28  wget -O out.pdf https://tinyurl.com/yy94jltt
+   29  ls -latr
+   30  history > worksheet1.log
+   31  date
+   32  pwd
+   33  cd ~
+   34  cd Desktop/
+   35  ls -latr ; mdkir ws2 ; cd ws2
+   36  date
+   37  pwd
+   38  cd ~
+   39  cd Desktop/
+   40  ls -latr ; mkdir ws2 ; cd ws2
+   41  ls -latr
+   42  echo $?
+   43  man ps
+   44  ps aux
+   45  top
+   46  history > worksheet2.log
+   47  head worksheet2.log 
+   48  tail worksheet2.log
+   49  cat worksheet2.log 
+   50  date
+   51  pwd
+   52  cd ~
+   53  cd Desktop/
+   54  ls -latr ; mkdir ws2 ; cd ws2
+   55  ls -latr
+   56  echo $?
+   57  man ps
+   58  ps aux
+   59  top
+   60  history > worksheet2.log
+   61  head worksheet2.log
+   62  tail worksheet2.log
+   63  cat worksheet2.log 
+   64  exit
+   65  ls
+   66  gcc -o range range.c -Wall -Werror
+   67  ./range data.txt
+   68  gcc -o range range.c -Wall -Werror
+   69  ./range data.txt
+   70  gcc -o range range.c -Wall -Werror
+   71  ./range data.txt
+   72  gcc -o range range.c -Wall -Werror
+   73  ./range data.txt
+   74  ./range
+   75  gcc -o range range.c -Wall -Werror
+   76  ./range data.txt
+   77  ./range empty.txt
+   78  gcc -o range range.c -Wall -Werror
+   79  ./range empty.txt
+   80  ./range data.txt
+   81  gcc -o range range.c -Wall -Werror
+   82  ./range data.txt
+   83  gcc -o range range.c -Wall -Werror
+   84  ./range data.txt
+   85  ./range empty.txt
+   86  ./range one.txt
+   87  gcc -o range range.c -Wall -Werror
+   88  ./range data.txt
+   89  ./range empty.txt
+   90  ./range one.xt
+   91  ./range one.txt
+   92  gcc -o range range.c -Wall -Werror
+   93  ./range i
+   94  ./range data.txt
+   95  ./range empty.txt
+   96  ./range i
+   97  ls
+   98  cd CLionProjects/
+   99  ls
+  100  cd cs149hw/
+  101  ls
+  102  gcc -o range range.c -Wall -Werror
+  103  ./range empty.txt
+  104  ./range i
+  105  ./range data.txt
+  106  ls
+  107  cd Desktop/
+  108  ls
+  109  cd hw1
+  110  ls
+  111  gcc -o range range.c -Wall -Werror
+  112  range empty.txt
+  113  ./range empty.txt
+  114  ./range data.txt
+  115  ./range one.txt
+  116  ls
+  117  cd Desktop/
+  118  ls
+  119  cd hw1/
+  120  ls
+  121  gcc -o range range.c -Wall -Werror
+  122  ./range data.txt
+  123  ./range empty.txt
+  124  ./range one.txt
+  125  ./range i
+  126  ./range si.t dk
+  127  ls
+  128  cd Desktop/hw1/
+  129  ls
+  130  gcc -o range range.c -Wall -Werror
+  131  ./range data.txt
+  132  ./range data.txt empty.txt
+  133  ./range empty.txt
+  134  ./range i
+  135  mkdir ws3
+  136  pwd
+  137  ls
+  138  cd des
+  139  cd Desktop/
+  140  mkdir ws3
+  141  cd ws3
+  142  cd Desktop/ws3
+  143  wget https://github.com/torvalds/linux/arhive/master.zip
+  144  cd Desktop/ws3
+  145  wget https://github.com/torvalds/linux/archive/master.zip
+  146  unzip master.zip
+  147  cd linux-master/
+  148  pwd
+  149  alias l='ls -latr'
+  150  l
+  151  find . -name mem.c
+  152  find . -name mem.c | xargs head
+  153  find . -name mem.c | xargs grep 86
+  154  cd ..
+  155  history > worksheet3.log
+  156  head worksheet3.log
+  157  cd Desktop/
+  158  mkdir ws3
+  159  cd wk3
+  160  cd ws3
+  161  history > wkst3.log
+  162  ls
+  163  cd ws3
+  164  ls
+  165  cd ..
+  166  cd apue.3e/
+  167  ls
+  168  cd proc
+  169  ls
+  170  make all
+  171  ./test1
+  172  ls
+  173  ls
+  174  cd Desktop/
+  175  ls
+  176  cd ws6
+  177  ls
+  178  gcc -o prob1 5.27.c -Wall -Werror
+  179  ./prob1
+  180  gcc -o prob2 6.33.c -Wall -Werror
+  181  ./prob2
+  182  ./prob1
+  183  gcc -o prob1 5.27.c -Wall -Werror
+  184  ./prob1
+  185  ls
+  186  cd Desktop/
+  187  ls
+  188  cd ws6
+  189  ls
+  190  gcc -o ws5 ws5.c -Wall -Werror
+  191  ./ws5
+  192  ls
+  193  cd CL
+  194  cd CLionProjects/
+  195  ls
+  196  cd cs149hw2
+  197  ls
+  198  gcc -o range_many range_many.c -Wall -Werror
+  199  ./range_many 
+  200  gcc -o range_many range_many.c -Wall -Werror
+  201  ./range_many file1.txt file2.txt
+  202  gcc -o range_many range_many.c -Wall -Werror
+  203  ./range_many file1.txt file2.txt
+  204  gcc -o range_many range_many.c -Wall -Werror
+  205  ./range_many file1.txt file2.txt
+  206  gcc -o range_many range_many.c -Wall -Werror
+  207  ./range_many file1.txt file2.txt
+  208  gcc -o range_many range_many.c -Wall -Werror
+  209  ./range_many file1.txt file2.txt
+  210  gcc -o range_many range_many.c -Wall -Werror
+  211  ./range_many file1.txt file2.txt
+  212  gcc -o range_many range_many.c -Wall -Werror
+  213  ./range_many file1.txt file2.txt file3.txt
+  214  gcc -o range_many range_many.c -Wall -Werror
+  215  ./range_many file1.txt file2.txt file3.txt
+  216  gcc -o range_many range_many.c -Wall -Werror
+  217  ./range_many file1.txt file2.txt file3.txt
+  218  ps -elf | grep Z
+  219  ./range_many file1.txt file2.txt file3.txt
+  220  gcc -o range_many range_many.c -Wall -Werror
+  221  ./range_many file1.txt file2.txt file3.txt
+  222  gcc -o range_many range_many.c -Wall -Werror
+  223  ./range_many file1.txt file2.txt file3.txt
+  224  gcc -o range_many range_many.c -Wall -Werror
+  225  ./range_many file1.txt file2.txt file3.txt
+  226  pwd
+  227  gcc -o range_many range_many.c file1.txt file2.txt file3.txt
+  228  gcc -o range_many range_many.c -Wall -Werror
+  229  ./range_many file1.txt file2.txt file3.txt
+  230  gcc -o range_many range_many.c -Wall -Werror
+  231  ./range_many file1.txt file2.txt file3.txt
+  232  gcc -o range_many range_many.c -Wall -Werror
+  233  ./range_many file1.txt file2.txt file3.txt
+  234  gcc -o range_many range_many.c -Wall -Werror
+  235  ./range_many file3.txt file2.txt file1.txt
+  236  gcc -o range_many range_many.c -Wall -Werror
+  237  ./range_many file3.txt file2.txt file1.txt
+  238  gcc -o range_many range_many.c -Wall -Werror
+  239  ./range_many file3.txt file2.txt file1.txt
+  240  gcc -o range_many range_many.c -Wall -Werror
+  241  ./range_many file3.txt file2.txt file1.txt
+  242  gcc -o range_many range_many.c -Wall -Werror
+  243  ./range_many file3.txt file2.txt file1.txt
+  244  gcc -o range_many range_many.c -Wall -Werror
+  245  ./range_many file3.txt file2.txt file1.txt
+  246  gcc -o range_many range_many.c -Wall -Werror
+  247  ./range_many file3.txt file2.txt file1.txt
+  248  gcc -o range_many range_many.c -Wall -Werror
+  249  ./range_many file3.txt file2.txt file1.txt
+  250  ./range_many file3.txt file2.txt notexist
+  251  gcc -o range_many range_many.c -Wall -Werror
+  252  ./range_many file3.txt file2.txt notexist
+  253  gcc -o range_many range_many.c -Wall -Werror
+  254  ./range_many file3.txt file2.txt notexist
+  255  ./range_many file3.txt file2.txt file1.txt
+  256  gcc -o range_many range_many.c -Wall -Werror
+  257  ./range_many file3.txt file2.txt file1.txt
+  258  ps aux
+  259  ./lseek 
+  260  gcc lseek lseek_example.c
+  261  ./lseek 
+  262  gcc lseek lseek_example.c
+  263  ./lseek 
+  264  gcc lseek lseek_example.c
+  265  ./lseek 
+  266  gcc lseek lseek_example.c
+  267  ./lseek 
+  268  gcc lseek lseek_example.c
+  269  ./lseek 
+  270  gcc lseek lseek_example.c
+  271  ./lseek 
+  272  gcc lseek lseek_example.c -Wall -Werror
+  273  ./lseek 
+  274  gcc lseek lseek_example.c -Wall -Werror
+  275  ./lseek 
+  276  gcc lseek lseek_example.c -Wall -Werror
+  277  ./lseek 
+  278  gcc lseek lseek_example.c -Wall -Werror
+  279  ./lseek 
+  280  gcc lseek lseek_example.c -Wall -Werror
+  281  ./lseek 
+  282  gcc lseek lseek_example.c -Wall -Werror
+  283  ./lseek 
+  284  gcc lseek lseek_example.c -Wall -Werror
+  285  ./lseek 
+  286  gcc lseek lseek_example.c -Wall -Werror
+  287  ./lseek 
+  288  gcc lseek lseek_example.c -Wall -Werror
+  289  ./lseek 
+  290  cd ~/Desktop/
+  291  mkdir ws7
+  292  cd ws7
+  293  ls | wc
+  294  ls | sort | wc
+  295  ls -latr /bin  > a.out
+  296  cat a.out | more
+  297  strace ls
+  298  du -sh
+  299  df -i
+  300  history > worksheet7.log

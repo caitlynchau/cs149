@@ -1,0 +1,38 @@
+  319  ls
+  320  cd apue.3e/
+  321  ls
+  322  cd signals/
+  323  make all
+  324  ./sigusr &
+  325  kill -SIGUSR1 pid
+  326  kill -9 pid
+  327  make all
+  328  ./sigusr &
+  329  kill -SIGUSR1 1806
+  330  kill -SIGUSR2 1806
+  331  kill -SIGCONT 1806
+  332  kill -9 1806
+  333  make all
+  334  ./sigusr &
+  335  kill -SIGUSR1 1835
+  336  kill -SIGUSR2 1835
+  337  kill -SIGCONT 1835
+  338  kill -9 1835
+  339  make all
+  340  ./sigusr &
+  341  kill -SIGUSR1 1858
+  342  kill -SIGUSR2 1858
+  343  kill -SIGCONT 1825
+  344  kill -SIGCONT 1835
+  345  kill -SIGCONT 1858
+  346  kill -9 1858
+  347  ls
+  348  cd apue.3e/
+  349  cd signals/
+  350  make all
+  351  ./sigusr &
+  352  kill -SIGUSR1 1886
+  353  kill -SIGUSR2 1886
+  354  kill -SIGCONT 1886
+  355  kill -9 1886
+  356  history > worksheet9.log
