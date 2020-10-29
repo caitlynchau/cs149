@@ -143,6 +143,9 @@ int main(int argc, char * argv[]) {
         fprintf(stdout, "Finished at %ld, runtime duration %f\n", finish.tv_sec, elapsed);
         fflush(stdout);
 
+        close(out_fd);
+        close(err_fd);
+
 
         if (WIFEXITED(status)) {
             fprintf(stderr, "Child %d terminated normally with exit code: %d\n",
@@ -152,6 +155,12 @@ int main(int argc, char * argv[]) {
                     pid, WTERMSIG(status));
         }
 
+        if (elapsed < 2) {
+            // print Spawning too fast in .err file
+            fprintf(stderr, "Spawning too fast\n");
+        }   
+
+        // otherwise elapsed time > 2, re-execute
         if (elapsed > 2) { 
             // restart the process
             pid = fork();
@@ -187,11 +196,13 @@ int main(int argc, char * argv[]) {
                 // execute command
                 char *myargs[20];
                 int index = 0;
-                while (*(current->command[index]) != '\0') {
-                    myargs[index] = current->command[index];
+                while (*(finished->command[index]) != '\0') {
+                    myargs[index] = finished->command[index];
                     index += 1;
                 }
                 myargs[index] = NULL;
+
+                // execute commands
                 execvp(myargs[0], myargs);
 
                 // print error if execvp fails
@@ -201,13 +212,7 @@ int main(int argc, char * argv[]) {
                 finished->PID = pid;
             }
 
-        } else if (elapsed < 2) {
-            // print Spawning too fast in .err file
-            fprintf(stderr, "Spawning too fast\n");
-        }   
+        } 
 
-        close(out_fd);
-        close(err_fd);
-
-    } // end while - parent
+    }
 }
