@@ -1,0 +1,7 @@
+sleep 5
+ls -later
+wc /etc/passwd
+this is
+thisiadkslfja
+alkdfjakldfa
+aldjf
