@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "CommandNode.h"
+#include "TraceNode.h"
 
 /**
  *CommandNode.c
@@ -26,7 +27,7 @@
 //create a new command node. usually nextCmd can be NULL and function InsertCommandAfter can be called to insert after head node.
 void CreateCommandNode(CommandNode* thisNode, char * cmd, int ind, CommandNode* nextCmd) {
    //this is useful if you store a string (char *): strcpy(thisNode->command, cmd);
-   thisNode->command = cmd; // don't need strcpy since we already used malloc
+   thisNode->command = cmd;
    thisNode->index = ind;
    thisNode->nextCommandPtr = nextCmd;
    return;
@@ -56,3 +57,12 @@ CommandNode* FindCommand(CommandNode* cmd, int pid) {
    }
    return NULL;
 }
+
+// print all nodes in linked list recursively
+void PrintNodes(CommandNode * node) {
+  if (node == NULL) return;
+
+  fprintf(stdout, "Index %d: %s\n", node->index, node->command);
+  PrintNodes(node->nextCommandPtr);
+}
+
