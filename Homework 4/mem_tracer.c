@@ -1,3 +1,8 @@
+/*
+mem_tracer.c
+Author: Caitlyn Chau
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -56,6 +61,12 @@ void FREE(void * ptr, char * file, int line)
 
 int main(int argc, char * argv[]) {
 
+	/* Check user arguments */
+	if (argc != 2) {
+		printf("mem_tracer: specify at most 1 argument\n");
+		exit(1);
+	}
+
 	FILE * file;
 	size_t bufferSize = 20;
 	size_t maxLines = 3;
@@ -73,6 +84,7 @@ int main(int argc, char * argv[]) {
 	CommandNode * head = NULL;
     CommandNode * current = NULL;
     CommandNode * prev = (CommandNode*)malloc(sizeof(CommandNode));
+    free(prev);
 
 	/* Open file */
     file = fopen(argv[1], "r");
@@ -179,22 +191,11 @@ char ** allocateFileArr(char ** fileArr, int rows, int columns) {
 void FreeLinkedList(CommandNode * head) {
 	PUSH_TRACE("FreeLinkedList");
 
-	CommandNode * next = GetNextCommand(head);
-	CommandNode * cur = head;
-
-	while (cur != NULL) {
-
-		free(cur);
-
-		if (next == NULL) { // reached end of list
-			cur = NULL;
-		} else { 
-		    // update next and cur
-		    CommandNode * temp = next;
-		    next = GetNextCommand(next);
-		    cur = temp;
-		}
-
+	CommandNode * temp;
+	while (head != NULL) {
+		temp = head;
+		head = GetNextCommand(head);
+		free(temp);
 	}
 
 	POP_TRACE();
