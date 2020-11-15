@@ -9,10 +9,11 @@
 #include "TraceNode.h"
 
 /* function prototypes */
-void addColumn(char ** fileArr, int rows, int columns);
-void addRow(char ** fileArr, int rows, int columns);
+// char ** increaseBufferSize(char ** fileArr, int index, int newSize);
+char ** increaseMaxLines(char ** fileArr, int newMaxLines, int bufferSize);
 char ** allocateFileArr(char ** fileArr, int rows, int columns);
 void FreeLinkedList(CommandNode * head);
+
 
 /* REALLOC calls realloc() and prints information about reallocated memory segment */
 void * REALLOC(void * ptr, int size, char * file, int line)
@@ -56,25 +57,22 @@ void FREE(void * ptr, char * file, int line)
 int main(int argc, char * argv[]) {
 
 	FILE * file;
-	size_t bufferSize = 3;
-	size_t maxLines = 10;
+	size_t bufferSize = 20;
+	size_t maxLines = 3;
 	char ** fileArr = NULL;
 	char * line = NULL;
 	int index = 0;
+	size_t read;
+	size_t len = 0;
 
 	/* Redirect output to memtrace.out */
     int out_fd = open("memtrace.out", O_CREAT|O_APPEND|O_RDWR, 0777);
-    fprintf(stdout, "OPENED FILE\n");
     dup2(out_fd, STDOUT_FILENO);
-
-    fprintf(stdout, "REDIRECT OUTPUT\n");
-
 
 	/* Initialize linked list */
 	CommandNode * head = NULL;
     CommandNode * current = NULL;
     CommandNode * prev = (CommandNode*)malloc(sizeof(CommandNode));
-    fprintf(stdout, "LINKED LIST\n");
 
 	/* Open file */
     file = fopen(argv[1], "r");
@@ -85,24 +83,24 @@ int main(int argc, char * argv[]) {
 
     /* Allocate space for file array */
     fileArr = allocateFileArr(fileArr, maxLines, bufferSize);
-    fprintf(stdout, "FILE ARR\n");
 
     /* Keep reading until EOF */
-    while (!feof(file)) {
+    while ((read = getline(&line, &len, file)) != -1) {
     	
-    	getline(&line, &bufferSize, file);
     	line[strlen(line) - 1] = '\0'; // replace newline character with null
 
-    	/* Check if string length is too long */
-		if (strlen(line) > bufferSize) {
-			bufferSize = strlen(line);
-			addColumn(fileArr, maxLines, bufferSize);
-		}
+    	// For this assignment, assume line has no more than 20 characters
+  		/* Check if string length is too long */
+		// if (strlen(line) > bufferSize) {
+		// 	bufferSize = strlen(line);
+		// 	fileArr = increaseBufferSize(fileArr, index, bufferSize);
+		// }
 
     	/* Check if enough rows in fileArr */
     	if (index == maxLines) {
     		maxLines++;
-    		addRow(fileArr, maxLines, bufferSize);
+    		// addRow(fileArr, maxLines, bufferSize);
+    		fileArr = increaseMaxLines(fileArr, maxLines, bufferSize);
     	}
 
     	/* Add new line to fileArr */
@@ -127,36 +125,41 @@ int main(int argc, char * argv[]) {
     fclose(file);
 
   	/* Free allocated memory */
+  	for (int i = 0; i < maxLines; i++){
+  		free(fileArr[i]);
+  	}
   	free(fileArr);
   	free(line);
   	FreeLinkedList(head);
+  	FREE_TRACE_TOP();
 
    	return 0;
 }
 
+// char ** increaseBufferSize(char ** fileArr, int index, int newSize) {
+// 	PUSH_TRACE("increaseBufferSize");
 
-void addColumn(char ** fileArr, int rows, int columns) {
-	PUSH_TRACE("addColumn");
+// 	fileArr[index] = (char*)realloc(fileArr[index], sizeof(char) * newSize);
 
-	fileArr = (char**)realloc(fileArr, sizeof(char*) * rows);
-	for (int i = 0; i < rows; i++) {
-		fileArr[i] = (char*)realloc(fileArr[i], sizeof(char) * (columns+1));
-	}
+// 	POP_TRACE();
 
-	POP_TRACE();
-}
+// 	return fileArr;
+// }
 
+char ** increaseMaxLines(char ** fileArr, int newMaxLines, int bufferSize) {
+	PUSH_TRACE("increaseMaxLines");
 
-void addRow(char ** fileArr, int rows, int columns) {
-	PUSH_TRACE("addRow");
-
-	fileArr = (char**)realloc(fileArr, sizeof(char*) * rows);
-	for (int i = 0; i < rows; i++) {
-		fileArr[i] = (char*) realloc(fileArr[i], sizeof(char) * columns);
-	}
+	fileArr = (char**)realloc(fileArr, sizeof(char*) * newMaxLines);
+	// for (int i = 0; i < newMaxSize; i++){ 
+	// 	fileArr[i] = (char*)realloc(fileArr[i], sizeof(char) * bufferSize);
+	// }
+	fileArr[newMaxLines - 1] = (char*)malloc(sizeof(char) * bufferSize);
 
 	POP_TRACE();
+
+	return fileArr;
 }
+
 
 char ** allocateFileArr(char ** fileArr, int rows, int columns) {
 	PUSH_TRACE("allocateFileArr");
@@ -167,6 +170,7 @@ char ** allocateFileArr(char ** fileArr, int rows, int columns) {
 	}
 
 	POP_TRACE();
+
 	return fileArr;
 }
 

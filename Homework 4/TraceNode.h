@@ -10,6 +10,7 @@ typedef struct TRACE_NODE_STRUCT {
 void PUSH_TRACE(char * p);
 void POP_TRACE();
 char * PRINT_TRACE();
+void FREE_TRACE_TOP();
 
 
 #endif
