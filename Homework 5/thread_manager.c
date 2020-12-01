@@ -21,10 +21,10 @@ int getLogid();
 pthread_mutex_t tlockLogIndex = PTHREAD_MUTEX_INITIALIZER; // log index
 pthread_mutex_t tlockAllocateThread = PTHREAD_MUTEX_INITIALIZER; // allocating THREADDATA
 pthread_mutex_t tlockDeallocateThread = PTHREAD_MUTEX_INITIALIZER; // deallocate THREADDATA
-pthread_mutex_t tlockModifyLinkedList = PTHREAD_MUTEX_INITIALIZER; // modifying linked list
-pthread_mutex_t tlockListHeadFlag = PTHREAD_MUTEX_INITIALIZER; // linked list head flag
+pthread_mutex_t tlockLinkedList = PTHREAD_MUTEX_INITIALIZER; // modifying linked list
 pthread_mutex_t tlockReadFlag = PTHREAD_MUTEX_INITIALIZER; // read flag
 
+pthread_cond_t condition = PTHREAD_COND_INITIALIZER;
 
 /* THREADDATA declaration */
 struct THREADDATA_STRUCT
@@ -41,8 +41,6 @@ THREADDATA* p = NULL;
 
 //variable for indexing of messages by the logging function
 int logindex = 0;
-int *logip = &logindex;
-
 
 //A flag to indicate if the reading of input is complete, 
 //so the other thread knows when to stop
@@ -75,7 +73,7 @@ int main()
 
 	printf("wait for first thread to exit\n");
 	pthread_join(tid1, NULL);
-	printf("first thread exited");
+	printf("first thread exited\n");
 
 	printf("wait for second thread to exit\n");
 	pthread_join(tid2, NULL);
@@ -91,9 +89,12 @@ int main()
 **********************************************************************/
 void * thread_runner(void* x)
 {
+	time_t now;
 	pthread_t me;
 	me = pthread_self();
-	time_t now;
+	
+	time(&now);
+	printLog(getLogid(), me, getpid(), now, "entered thread_runner");
 
 	/* Critical section: allocate p */
 	pthread_mutex_lock(&tlockAllocateThread);
@@ -106,7 +107,6 @@ void * thread_runner(void* x)
 	pthread_mutex_unlock(&tlockAllocateThread);  
 	// Critical section ends
 
-
 	/* Thread 1 */
 	if (p != NULL && p->creator == me) {
 
@@ -115,17 +115,22 @@ void * thread_runner(void* x)
 			/* break when new line is encountered */
 			if (buf[0] == '\n') break;
 
+			// otherwise set newline character to null
+			buf[strlen(buf) - 1] = '\0'; 
+
 			/* Critical section: add node linked list */
-			pthread_mutex_lock(&tlockModifyLinkedList);
+			pthread_mutex_lock(&tlockLinkedList);
 
 			current = (Node*)malloc(sizeof(Node));
 			CreateNewNode(current, buf, head);
 			head = current; // head updated
+			is_head_updated = true;
 
 			time(&now);
-			printLog(getLogid(), me, getpid(), now, "updated linked list");
+			printLog(getLogid(), me, getpid(), now, "created and inserted node");
 			
-			pthread_mutex_unlock(&tlockModifyLinkedList);
+			pthread_mutex_unlock(&tlockLinkedList);
+			pthread_cond_signal(&condition);
 			/* end critical section */
 			
 		} // end while	
@@ -133,11 +138,14 @@ void * thread_runner(void* x)
 		/* Critical section: update is_reading_complete and is_head_updated flags */
 		pthread_mutex_lock(&tlockReadFlag);
 		is_reading_complete = true;
+		pthread_cond_signal(&condition);
 		pthread_mutex_unlock(&tlockReadFlag);
 
-		pthread_mutex_lock(&tlockListHeadFlag);
-		is_head_updated = true;
-		pthread_mutex_unlock(&tlockListHeadFlag);
+
+
+		// pthread_mutex_lock(&tlockListHeadFlag);
+		// is_head_updated = true;
+		// pthread_mutex_unlock(&tlockListHeadFlag);
 		/* end critical section */
 
 	// end if
@@ -145,42 +153,68 @@ void * thread_runner(void* x)
 	/* Thread 2 */
 	} else { 
 	
-		while (is_reading_complete) { 
-			char outputMsg[50];
-			sleep(2);
-			sprintf(outputMsg, "head of linked list contains line %s", head->input);
+		while (is_reading_complete == 0) { 
+
+			/* Critical section: wait for linked list to update */
+			pthread_mutex_lock(&tlockLinkedList);
+
+			// waiting for user input and make sure last input
+			// and make sure last thing inputted is not a newline
+			// signaling read is complete
+			while (!is_head_updated && !is_reading_complete) {
+				pthread_cond_wait(&condition, &tlockLinkedList);
+			}
+
+			is_head_updated = false;
+			pthread_mutex_unlock(&tlockLinkedList);
+
+			if (!is_reading_complete) {
+				char outputMsg[50];
+				sprintf(outputMsg, "head of linked list contains line: %s", head->input);
+				time(&now);
+				printLog(getLogid(), me, getpid(), now, outputMsg);
+			}
+		} // end while
+
+		/* Reading complete */
+
+		/* Critical section: deallocate linked list */
+		pthread_mutex_lock(&tlockLinkedList);
+
+		FreeNodes(head);
+		head = NULL;
+		time(&now);
+		printLog(getLogid(), me, getpid(), now, "deallocated linked list");
+
+		pthread_mutex_unlock(&tlockLinkedList);
+		/* end critical section */
+
+
+		/* Critical section: deallocate thread */
+		pthread_mutex_lock(&tlockDeallocateThread);
+		if (p != NULL && p->creator != me) {
+
+			free(p);
+			p = NULL;
 			time(&now);
-			printLog(getLogid(), me, getpid(), now, outputMsg);
+			printLog(getLogid(), me, getpid(), now, "deallocated THREADDATA");
+
 		}
+
+		pthread_mutex_unlock(&tlockDeallocateThread);
+		/* end critical section */
 	} // end else
 
-	/* Critical section: deallocate linked list */
-	pthread_mutex_lock(&tlockModifyLinkedList);
-
-	FreeNodes(head);
-	head = NULL;
-	time(&now);
-	printLog(getLogid(), me, getpid(), now, "deallocated linked list");
-
-	pthread_mutex_unlock(&tlockModifyLinkedList);
-	/* end critical section */
 
 
-	/* Critical section: deallocate thread */
-	pthread_mutex_lock(&tlockDeallocateThread);
-
-	free(p);
-	time(&now);
-	printLog(getLogid(), me, getpid(), now, "deallocated THREADDATA");
-
-	pthread_mutex_unlock(&tlockDeallocateThread);
-	/* end critical section */
+	
 
 	
 
 	time(&now);
-	printLog(getLogid(), me, getpid(), now, "exit thread_runner()");
+	printLog(getLogid(), me, getpid(), now, "exiting thread_runner()");
 	
+	pthread_exit(NULL);
 	return NULL;
 
 }//end thread_runner
