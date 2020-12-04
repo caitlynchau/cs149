@@ -1,3 +1,8 @@
+/* 
+Author: Caitlyn Chau
+CS 149 HW 5
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,7 +11,6 @@
 #include <unistd.h>
 #include <time.h>
 
-
 #include "Node.h"
 
 
@@ -14,7 +18,6 @@
 void * thread_runner(void*);
 void printLog(int logid, pthread_t threadid, pid_t pid, time_t now, char msg[50]);
 int getLogid();
-// void updateReadFlag();
 
 
 /* locks */
@@ -141,13 +144,6 @@ void * thread_runner(void* x)
 		pthread_cond_signal(&condition);
 		pthread_mutex_unlock(&tlockReadFlag);
 
-
-
-		// pthread_mutex_lock(&tlockListHeadFlag);
-		// is_head_updated = true;
-		// pthread_mutex_unlock(&tlockListHeadFlag);
-		/* end critical section */
-
 	// end if
 
 	/* Thread 2 */
@@ -205,12 +201,6 @@ void * thread_runner(void* x)
 		/* end critical section */
 	} // end else
 
-
-
-	
-
-	
-
 	time(&now);
 	printLog(getLogid(), me, getpid(), now, "exiting thread_runner()");
 	
@@ -250,14 +240,3 @@ int getLogid() {
 
 	return logindex;
 }
-
-// void updateReadFlag() {
-// 	/* Critical section: update read flag */
-// 	pthread_mutex_lock(&tlockReadFlag);
-
-// 	if (is_reading_complete) is_reading_complete = false;
-// 	else is_reading_complete = true;
-
-// 	pthread_mutex_unlock(&tlockReadFlag);
-// 	/* end critical section */
-// }
